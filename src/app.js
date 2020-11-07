@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 import { DISCORD_TOKEN, TWITCH_CHANNEL_ID } from './constants'
-import { containsUrl, isTwitchUrl } from './helpers'
+import { containsBotCommand } from './helpers'
 
 
 client.on('ready', () => {
@@ -13,32 +13,23 @@ client.on('message', msg => {
     msg.reply('Pong!');
   }
     if (msg.channel.id === TWITCH_CHANNEL_ID) {
-      console.log('is twitch channel')
-      // is in twitch channel
-      if (containsUrl(msg.content)) {
-        console.log('contains url')
-          // is a url
-          // we need to check to see if it's a twitch url
-          if (isTwitchUrl(msg.content)) {
-            console.log('is twitch url')
-            // is a twitch url
-            // do nothing
-          } else {
-            // is twitch url
-            // we need to tell them
-            msg.channel.send(`<@${msg.author.id}>
-            Sorry, this channel only allows Twitch URLS`)
-                      // then delete it
-            msg.delete()
-            console.log('is a twitch url')
-          }
-      } else {
-        // it's not a url
+      console.log('is general channel')
+      // is in general channel
+      if (containsBotCommand(msg.content)) {
+        console.log('contains bot command')
+          // is bot command
+          msg.channel.send(`<@${msg.author.id}>
+          Sorry, this channel is not for bot commands`)
+          // then delete it
+          msg.delete()
+          console.log('is a bot command')
+        } else {
+        // it's not a bot command
         // do nothing
-        console.log('not url')
+        console.log('not a bot command')
       }
     } else {
-      console.log('not the twitch channel')
+      console.log('not the general channel')
     }
 });
 
