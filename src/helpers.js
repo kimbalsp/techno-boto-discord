@@ -1,9 +1,8 @@
-export function containsUrl(message) {
+export function containsBotCommand(message) {
   message = message.toLowerCase()
   let urlFound = false
-  if (message.includes('http://') ||
-      message.includes('https://') ||
-      message.includes('www')) {
+  if (message.includes('!play') ||
+      message.includes('!skip')) {
         urlFound = true
   }
   return urlFound
